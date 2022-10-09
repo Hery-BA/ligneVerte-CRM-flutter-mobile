@@ -17,20 +17,17 @@ class _ProjectState extends State<Message> {
       ),
       body: Stack(
         children: <Widget>[
-          Container(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  RaisedButton(onPressed: null),
-                  RaisedButton(onPressed: null)
-                ],
-              ),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                //hasiana zavatra
+              ],
             ),
           ),
           SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                SizedBox(
+                const SizedBox(
                   height: 600,
                 ),
                 _textfield()
