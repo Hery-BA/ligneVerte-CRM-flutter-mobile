@@ -63,76 +63,125 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 400,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    borderRadius:BorderRadius.circular(80),
-                    gradient:const LinearGradient(
-                      begin: Alignment.bottomLeft,colors:[Color.fromARGB(255, 244, 67, 54),Color.fromARGB(255, 244, 67, 54)],
-                    )
-                    
-                  ),
+                      borderRadius: BorderRadius.circular(80),
+                      gradient: const LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        colors: [
+                          Color.fromARGB(255, 244, 67, 54),
+                          Color.fromARGB(255, 244, 67, 54)
+                        ],
+                      )),
                 ),
-                ),
-                Padding(padding: const EdgeInsets.symmetric(horizontal:20,vertical:90),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 90),
                 child: SingleChildScrollView(
-                  child: Column(children: [
-                    const Text('Croix rouge madagascar',style:TextStyle(color: Colors.white,fontSize:26,
-                    fontWeight: FontWeight.bold,
-                    ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Text('poster ici votre requette',style:TextStyle(color:Colors.white,fontSize:18),
-                    ),
-                    Padding(padding: const EdgeInsets.only(top: 10),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Croix rouge madagascar',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                        'poster ici votre requette',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Column(
                           children: [
-                           GestureDetector(child: Aspect(image: 'images/projet.png', text: 'Projet'),
-                           onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>Project()));},),
-                           GestureDetector(child: Aspect(image: 'images/localisation.png', text: 'Region'),
-                           onTap: (){
-                             Navigator.push(context, MaterialPageRoute(builder: (context)=>Region()));
-                           },),
-                         
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                GestureDetector(
+                                  child: Aspect(
+                                      image: 'images/projet.png',
+                                      text: 'Projet'),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Project()));
+                                  },
+                                ),
+                                GestureDetector(
+                                  child: Aspect(
+                                      image: 'images/localisation.png',
+                                      text: 'Region'),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Region()));
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                GestureDetector(
+                                  child: Aspect(
+                                      image: 'images/message2.png',
+                                      text: 'Message'),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Message()));
+                                  },
+                                ),
+                                GestureDetector(
+                                  child: Aspect(
+                                      image: 'images/satistique2.png',
+                                      text: 'Statistique'),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Statistique()));
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                GestureDetector(
+                                  child: Aspect(
+                                      image: 'images/aboutus.png',
+                                      text: 'A propos'),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Aboutus()));
+                                  },
+                                )
+                              ],
+                            ),
                           ],
                         ),
-                        const SizedBox(
-                          height:15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                           GestureDetector(child: Aspect(image: 'images/message2.png', text: 'Message'),
-                           onTap: (){
-                             Navigator.push(context, MaterialPageRoute(builder: (context)=>Message()));
-                           },),
-                           GestureDetector(child: Aspect(image: 'images/satistique2.png', text: 'Statistique'),
-                           onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Statistique()));
-                           },),
-                         
-                          ],
-                        ),
-                        const SizedBox(
-                          height:15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(child: Aspect(image: 'images/aboutus.png', text: 'A propos'),
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Aboutus()));
-                            },)
-                          ],
-                        ),
-                      ],
-                    ),)
-                  ],
+                      )
+                    ],
                   ),
                 ),
-                ),
+              ),
             ],
           )
         ],
