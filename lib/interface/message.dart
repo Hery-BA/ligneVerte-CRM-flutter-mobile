@@ -1,3 +1,4 @@
+import 'package:croix_rouge/interface/insert_message.dart';
 import 'package:flutter/material.dart';
 
 class Message extends StatefulWidget {
@@ -28,22 +29,68 @@ class _ProjectState extends State<Message> {
             child: Column(
               children: <Widget>[
                 const SizedBox(
-                  height: 600,
+                  height: 620,
                 ),
-                _textfield()
+                SingleChildScrollView(
+                  child: Container(
+                    height: 70,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          width: 350,
+                          child: _textfield(),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(60),
+                              color: const Color.fromARGB(255, 244, 67, 54)),
+                          child: const IconButton(
+                              onPressed: null, icon: Icon(Icons.send)),
+                        )
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
           )
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const insert_message()))
+        },
+        tooltip: 'add client',
+        child: const Icon(Icons.person_add_alt),
+      ),
     );
   }
 
-  _textfield() => TextFormField(
+  final _controler = TextEditingController();
+  int _countWords({required String text}) {
+    final trimmedText = text.trim();
+    if (trimmedText.isEmpty) {
+      return 0;
+    } else {
+      return trimmedText.split(RegExp("\\s+")).length;
+    }
+  }
+
+  _textfield() => TextField(
+        controller: this._controler,
+        minLines: 1,
+        maxLines: 10,
+        textCapitalization: TextCapitalization.sentences,
         decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'tapez ici',
-          labelText: 'votre message',
+          //counterText: '${_countWords(text: this._controler.text)}',
+          labelText: 'Message',
+          alignLabelWithHint: true,
+          hintText: 'Tapez votre message ici...',
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30))),
         ),
+        onChanged: (text) => setState(() {}),
       );
 }
