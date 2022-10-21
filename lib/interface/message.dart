@@ -1,9 +1,7 @@
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
-import 'package:croix_rouge/interface/insert_message.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:croix_rouge/models/project_model.dart';
+import 'package:croix_rouge/models/region_model.dart';
+import 'package:croix_rouge/utils/database_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:custom_date_range_picker/custom_date_range_picker.dart';
-import 'date_namboariko.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 //import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -15,13 +13,30 @@ class Message extends StatefulWidget {
 }
 
 class _ProjectState extends State<Message> {
-  String? valerurr;
+  //======================les variables===============================
+  String idProj = '';
+  String idRegion = '';
   String status = 'En attente';
-  String? _onSelectionChanged;
   String daate = '____-__-__';
   int? _radioval = 0;
+  DatabaseHelper? _dbHelper;
+  //=====================les listes==================================
   List<String> list = ['salama', 'salut', 'akory', 'hallo'];
   List<Map<String, dynamic>> listmap = [];
+  List<ProjectModel> listeProject = [];
+  List<RegionModel> listeRegion = [];
+  //====================xxx xxxxx====================================
+  //====================les fonctions================================
+  afficherlisteProjectETregion() async {
+    List<ProjectModel> pmdl = await _dbHelper!.fetchProjects();
+    List<RegionModel> Rmdl = await _dbHelper!.afficherRegion();
+    setState(() {
+      listeProject = pmdl;
+      listeRegion = Rmdl;
+      print(listeProject);
+    });
+  }
+
   afficher() {
     for (int i = 0; i < list.length; i++) {
       print(list[i]);
@@ -63,12 +78,24 @@ class _ProjectState extends State<Message> {
     }
   }
 
+//================================xx xxxxxx==================================================
+//===========================Corps de l'interface message====================================
+  @override
+  void initState() {
+    // TODO: implement initState
+    setState(() {
+      _dbHelper = DatabaseHelper.instance;
+    });
+    afficherlisteProjectETregion();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
-        title: Text('Messages'),
+        title: const Text('Messages'),
       ),
       body: _FormulaireCard(),
       floatingActionButton: FloatingActionButton(
@@ -79,6 +106,8 @@ class _ProjectState extends State<Message> {
     );
   }
 
+//=======================================xxxxxxxxxxxxxxxxxxxxxxxxxx===============================================================================================
+//=======================================les widgets============================================================================
   final _controler = TextEditingController();
   int _countWords({required String text}) {
     final trimmedText = text.trim();
@@ -126,16 +155,19 @@ class _ProjectState extends State<Message> {
                   width: 140,
                 ),
                 DropdownButton<String>(
-                    hint: Text(valerurr.toString()),
+                    hint: Text(idProj.toString()),
                     menuMaxHeight: 200,
-                    items: List<DropdownMenuItem<String>>.generate(list.length,
-                        (index) {
+                    items: List<DropdownMenuItem<String>>.generate(
+                        listeProject.length, (index) {
                       return DropdownMenuItem(
-                          value: list[index], child: Text(list[index]));
+                          value: listeProject.isNotEmpty
+                              ? listeProject[index].id.toString()
+                              : '',
+                          child: Text(listeProject[index].id.toString()));
                     }).toList(),
                     onChanged: (String? newvalue) {
                       setState(() {
-                        valerurr = newvalue.toString();
+                        idProj = newvalue.toString();
                         print('value = $newvalue');
                       });
                     })
@@ -151,16 +183,19 @@ class _ProjectState extends State<Message> {
                   width: 140,
                 ),
                 DropdownButton<String>(
-                    hint: Text(valerurr.toString()),
+                    hint: Text(idRegion.toString()),
                     menuMaxHeight: 200,
-                    items: List<DropdownMenuItem<String>>.generate(list.length,
-                        (index) {
+                    items: List<DropdownMenuItem<String>>.generate(
+                        listeRegion.length, (index) {
                       return DropdownMenuItem(
-                          value: list[index], child: Text(list[index]));
+                          value: listeRegion.isNotEmpty
+                              ? listeRegion[index].idreg.toString()
+                              : '',
+                          child: Text(listeRegion[index].idreg.toString()));
                     }).toList(),
                     onChanged: (String? newvalue) {
                       setState(() {
-                        valerurr = newvalue.toString();
+                        idRegion = newvalue.toString();
                         print('value = $newvalue');
                       });
                     })
@@ -252,6 +287,7 @@ class _ProjectState extends State<Message> {
           ],
         ),
       );
+  // ignore: non_constant_identifier_names
   _textfield_button() => Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -385,4 +421,5 @@ class _ProjectState extends State<Message> {
           ),
         ],
       );
+//=========================================================xxxxxxxxxxxxxxxxx=====================================
 }

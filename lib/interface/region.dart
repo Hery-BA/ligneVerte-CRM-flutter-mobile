@@ -43,7 +43,7 @@ class _RegionState extends State<Region> {
   }
 
   _enActualisant() async {
-    List<RegionModel> x = await _dbHelper!.afficherRegion(_regionModel);
+    List<RegionModel> x = await _dbHelper!.afficherRegion();
     setState(() {
       _regionList = x;
     });

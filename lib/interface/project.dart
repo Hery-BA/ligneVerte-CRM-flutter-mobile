@@ -116,6 +116,7 @@ class _ProjectState extends State<Project> {
     List<ProjectModel> x = await _dbHelper!.fetchProjects();
     setState(() {
       _projects = x;
+      print(_projects);
       etatBoutton = 'Ajouter';
     });
   }
