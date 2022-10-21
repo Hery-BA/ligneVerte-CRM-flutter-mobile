@@ -109,7 +109,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => Project()));
+                                            builder: (context) =>
+                                                const Project()));
                                   },
                                 ),
                                 GestureDetector(
@@ -120,7 +121,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => Region()));
+                                            builder: (context) =>
+                                                const Region()));
                                   },
                                 ),
                               ],
@@ -139,7 +141,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => Message()));
+                                            builder: (context) =>
+                                                const Message()));
                                   },
                                 ),
                                 GestureDetector(
@@ -151,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                Statistique()));
+                                                const Statistique()));
                                   },
                                 ),
                               ],
@@ -170,7 +173,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => Aboutus()));
+                                            builder: (context) =>
+                                                const Aboutus()));
                                   },
                                 )
                               ],

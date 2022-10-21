@@ -1,5 +1,11 @@
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:croix_rouge/interface/insert_message.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:custom_date_range_picker/custom_date_range_picker.dart';
+import 'date_namboariko.dart';
+import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
+//import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class Message extends StatefulWidget {
   const Message({Key? key}) : super(key: key);
@@ -9,6 +15,54 @@ class Message extends StatefulWidget {
 }
 
 class _ProjectState extends State<Message> {
+  String? valerurr;
+  String status = 'En attente';
+  String? _onSelectionChanged;
+  String daate = '____-__-__';
+  int? _radioval = 0;
+  List<String> list = ['salama', 'salut', 'akory', 'hallo'];
+  List<Map<String, dynamic>> listmap = [];
+  afficher() {
+    for (int i = 0; i < list.length; i++) {
+      print(list[i]);
+    }
+  }
+
+  Future afficherddd() async {
+    var s = await showRoundedDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(DateTime.now().year - 50),
+        lastDate: DateTime(DateTime.now().year + 20),
+        borderRadius: 16,
+        theme: ThemeData(primaryColor: Colors.red, accentColor: Colors.red));
+    print(s);
+    if (s != null) {
+      setState(() {
+        daate = s.toString();
+      });
+    }
+  }
+
+  verifStatus() {
+    if (_radioval == 0) {
+      setState(() {
+        status = 'En attente';
+        print(status);
+      });
+    } else if (_radioval == 1) {
+      setState(() {
+        status = 'En cours';
+        print(status);
+      });
+    } else if (_radioval == 2) {
+      setState(() {
+        status = 'Termine';
+        print(status);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +70,221 @@ class _ProjectState extends State<Message> {
         backgroundColor: Colors.red,
         title: Text('Messages'),
       ),
-      body: Stack(
+      body: _FormulaireCard(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {afficher()},
+        tooltip: 'add client',
+        child: const Icon(Icons.person_add_alt),
+      ),
+    );
+  }
+
+  final _controler = TextEditingController();
+  int _countWords({required String text}) {
+    final trimmedText = text.trim();
+    if (trimmedText.isEmpty) {
+      return 0;
+    } else {
+      return trimmedText.split(RegExp("\\s+")).length;
+    }
+  }
+
+  // ignore: non_constant_identifier_names
+  _FormulaireCard() => Center(
+        child: Card(
+          color: Colors.white,
+          elevation: 30.0,
+          child: SizedBox(
+            height: 600,
+            width: 360,
+            child: _Contenuformulaire(),
+          ),
+        ),
+      );
+  _Contenuformulaire() => SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            const SizedBox(
+              height: 15,
+            ),
+            Container(
+                alignment: Alignment.center,
+                child: const Text(
+                  'veillez remplir',
+                  style: TextStyle(fontSize: 30),
+                )),
+            Row(
+              children: [
+                const SizedBox(
+                  width: 20,
+                ),
+                const Text('Id project :'),
+                const SizedBox(
+                  width: 140,
+                ),
+                DropdownButton<String>(
+                    hint: Text(valerurr.toString()),
+                    menuMaxHeight: 200,
+                    items: List<DropdownMenuItem<String>>.generate(list.length,
+                        (index) {
+                      return DropdownMenuItem(
+                          value: list[index], child: Text(list[index]));
+                    }).toList(),
+                    onChanged: (String? newvalue) {
+                      setState(() {
+                        valerurr = newvalue.toString();
+                        print('value = $newvalue');
+                      });
+                    })
+              ],
+            ),
+            Row(
+              children: [
+                const SizedBox(
+                  width: 20,
+                ),
+                const Text('Id region :'),
+                const SizedBox(
+                  width: 140,
+                ),
+                DropdownButton<String>(
+                    hint: Text(valerurr.toString()),
+                    menuMaxHeight: 200,
+                    items: List<DropdownMenuItem<String>>.generate(list.length,
+                        (index) {
+                      return DropdownMenuItem(
+                          value: list[index], child: Text(list[index]));
+                    }).toList(),
+                    onChanged: (String? newvalue) {
+                      setState(() {
+                        valerurr = newvalue.toString();
+                        print('value = $newvalue');
+                      });
+                    })
+              ],
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                filled: false,
+                prefixIcon: Padding(
+                  padding: EdgeInsetsDirectional.only(bottom: 8.0),
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.black,
+                  ),
+                ),
+                hintText: 'Name',
+              ),
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                filled: false,
+                prefixIcon: Padding(
+                  padding: EdgeInsetsDirectional.only(bottom: 8.0),
+                  child: Icon(
+                    Icons.title,
+                    color: Colors.black,
+                  ),
+                ),
+                hintText: 'Titre',
+              ),
+            ),
+            TextFormField(
+              keyboardType: TextInputType.phone,
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                filled: false,
+                prefixIcon: Padding(
+                  padding: EdgeInsetsDirectional.only(bottom: 8.0),
+                  child: Icon(
+                    Icons.phone,
+                    color: Colors.black,
+                  ),
+                ),
+                hintText: 'tel',
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                const SizedBox(
+                  width: 10,
+                ),
+                const Icon(
+                  Icons.date_range,
+                  color: Colors.black,
+                ),
+                const SizedBox(
+                  width: 14,
+                ),
+
+                TextButton(
+                    onPressed: () => afficherddd(),
+                    child: Text(
+                      daate.substring(0, 10),
+                      style: const TextStyle(color: Colors.black),
+                    )),
+                // Column(
+                //   children: ['En attemte','en cours','terminer'].map(
+                //     (int index) => Radio<String>(
+                //     value: index,
+                //      groupValue: groupValue, onChanged: onChanged)),
+                // )
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            _radiobitt(),
+            const SizedBox(
+              height: 10,
+            ),
+            _textfield_button(),
+
+            // _dateTime(),
+          ],
+        ),
+      );
+  _textfield_button() => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          SizedBox(
+            width: 280,
+            child: _textfield(),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(60),
+                color: const Color.fromARGB(255, 244, 67, 54)),
+            child: IconButton(onPressed: () {}, icon: Icon(Icons.send)),
+          )
+        ],
+      );
+
+  _textfield() => TextField(
+        controller: this._controler,
+        minLines: 1,
+        maxLines: 10,
+        textCapitalization: TextCapitalization.sentences,
+        decoration: const InputDecoration(
+          //counterText: '${_countWords(text: this._controler.text)}',
+          labelText: 'Message',
+          alignLabelWithHint: true,
+          hintText: 'Tapez votre message ici...',
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30))),
+        ),
+        onChanged: (text) => setState(() {}),
+      );
+
+  _essai() => Stack(
         children: <Widget>[
           SingleChildScrollView(
             child: Column(
@@ -56,41 +324,65 @@ class _ProjectState extends State<Message> {
             ),
           )
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const insert_message()))
-        },
-        tooltip: 'add client',
-        child: const Icon(Icons.person_add_alt),
-      ),
-    );
-  }
+      );
 
-  final _controler = TextEditingController();
-  int _countWords({required String text}) {
-    final trimmedText = text.trim();
-    if (trimmedText.isEmpty) {
-      return 0;
-    } else {
-      return trimmedText.split(RegExp("\\s+")).length;
-    }
-  }
+  _radiobitt() => Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsetsDirectional.only(start: 10, top: 10),
+            child: Row(
+              children: [
+                Icon(Icons.task),
+                Text('Status:'),
+              ],
+            ),
+          ),
 
-  _textfield() => TextField(
-        controller: this._controler,
-        minLines: 1,
-        maxLines: 10,
-        textCapitalization: TextCapitalization.sentences,
-        decoration: const InputDecoration(
-          //counterText: '${_countWords(text: this._controler.text)}',
-          labelText: 'Message',
-          alignLabelWithHint: true,
-          hintText: 'Tapez votre message ici...',
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30))),
-        ),
-        onChanged: (text) => setState(() {}),
+          //decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+          Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsetsDirectional.only(top: 30),
+                child: Column(
+                    children: [0, 1, 2]
+                        .map((int index) => Padding(
+                              padding:
+                                  const EdgeInsetsDirectional.only(start: 70),
+                              child: Radio<int>(
+                                  value: index,
+                                  groupValue: this._radioval,
+                                  onChanged: (int? value) {
+                                    if (value != null) {
+                                      setState(() {
+                                        this._radioval = value;
+                                      });
+                                      verifStatus();
+                                    }
+                                  }),
+                            ))
+                        .toList()),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.only(start: 115, top: 30),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 18,
+                    ),
+                    Text('En Attente'),
+                    SizedBox(
+                      height: 32,
+                    ),
+                    Text('En cours'),
+                    SizedBox(
+                      height: 35,
+                    ),
+                    Text('Termine')
+                  ],
+                ),
+              )
+            ],
+          ),
+        ],
       );
 }
